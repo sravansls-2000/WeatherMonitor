@@ -1,0 +1,99 @@
+.loginForm {
+  width: 400px;
+  height: 400px;
+  display: grid;
+  align-items: center;
+  grid-template-rows: 150px 50px 50px 100px;
+}
+.RegisterForm {
+  max-width: 400px;
+  height: 400px;
+  display: grid;
+  align-items: center;
+  grid-template-rows: 150px 50px 50px 50px 100px;
+}
+
+.icon {
+  text-align: center;
+  color: black;
+}
+input {
+  padding: 10px 0 10px 15px;
+  font-size: 17px;
+  font-weight: 300;
+  color: black;
+  border-radius: 35px;
+  letter-spacing: 1px;
+  border: black solid 1px;
+  background: transparent;
+  box-sizing: border-box;
+  font-family: 'Mukta', sans-serif;
+  width: 100%;
+  outline: none;
+}
+
+button {
+  background: #fc636b;
+  border: none;
+  color: #fff;
+  padding: 11px 15px;
+  text-transform: uppercase;
+  font-family: 'Mukta', sans-serif;
+  font-size: 16px;
+  width: 100%;
+  margin-top: 10px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: 0.5s all;
+  -webkit-transition: 0.5s all;
+  -moz-transition: 0.5s all;
+  -o-transition: 0.5s all;
+  -ms-transition: 0.5s all;
+  border-radius: 35px;
+  -webkit-border-radius: 35px;
+}
+
+.instructions {
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: #000;
+  color: #fff;
+  padding: 0.25rem;
+  position: relative;
+  bottom: -10px;
+}
+
+.instructions > svg {
+  margin-right: 0.25rem;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
+
+.hide {
+  display: none;
+}
+
+.valid {
+  color: limegreen;
+  margin-left: 0.25rem;
+}
+
+.invalid {
+  color: red;
+  margin-left: 0.25rem;
+}
+
+.errmsg {
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.line {
+  display: inline-block;
+}
