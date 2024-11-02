@@ -6,8 +6,11 @@ import {
   faTimes,
   faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 import './login.css';
+
+import { useNavigate } from 'react-router';
 
 const PWD_regex = /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/;
 const Email_regex = /\S+@\S+\.\S+/;
@@ -15,6 +18,7 @@ const Email_regex = /\S+@\S+\.\S+/;
 const Rigister = () => {
   const emailRef = useRef();
   const errRef = useRef();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [validEmail, setValidEmail] = useState(false);
@@ -47,15 +51,35 @@ const Rigister = () => {
     setErrMsg('');
   }, [pwd, matchPwd]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const checkEmail = Email_regex.test(email);
+    const checkPSW = PWD_regex.test(pwd);
+
+    if (!checkEmail || !checkPSW) {
+      setErrMsg('Invalid Entry');
+      return;
+    }
+    try {
+      const response = await axios.post(
+        'http://localhost:8008/rigister',
+        JSON.stringify({ email, pwd }),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    } catch (error) {
+      setErrMsg('not able to Rigister at this Time Please try again later');
+    }
   };
 
   return (
     <div className="RegisterForm">
       <h1 className="icon">
-        <FontAwesomeIcon icon={faCloud} />
-        Register
+        R<FontAwesomeIcon icon={faCloud} />
+        gister
       </h1>
       <p
         ref={errRef}
