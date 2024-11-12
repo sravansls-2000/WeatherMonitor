@@ -4,46 +4,49 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloud } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  clearState,
+  loginUserAction,
+  userSelector,
+} from '../Redux/slices/userSlice';
 
 const Login = () => {
   const [Email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [isLogin, setIsLogin] = useState(null);
+  const { isFetching, isSuccess, isError, errorMessage } =
+    useSelector(userSelector);
   const navigate = useNavigate();
-
-  const handleLogin = async () => {
-    try {
-      const { data } = await axios.post(
-        'http://localhost:8008/login',
-        JSON.stringify({ Email, password }),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      console.log();
-
-      if (data.user) {
-        setIsLogin(data.msg);
-        navigate('/Home');
-      }
-    } catch (error) {
-      setIsLogin('Your Credential are wrong Please check');
-
-      throw new Error('Your Credential are wrong Please check');
-    }
+  const dispatch = useDispatch();
+  const handleLogin = () => {
+    dispatch(loginUserAction({ Email, password }));
   };
+
   useEffect(() => {
-    handleLogin;
-  }, [Email, password]);
+    return () => {
+      dispatch(clearState());
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(errorMessage);
+      dispatch(clearState());
+    }
+
+    if (isSuccess) {
+      dispatch(clearState());
+      navigate('/home');
+    }
+  }, [isError, isSuccess]);
+
   return (
     <div className="loginForm">
       <h1 className="icon">
         L<FontAwesomeIcon icon={faCloud} />
         gin
       </h1>
-      <p>{isLogin ? isLogin : null}</p>
+
       <input
         type="email"
         onChange={(e) => {
@@ -59,6 +62,13 @@ const Login = () => {
         placeholder="Password"
       />
       <button onClick={handleLogin}>login</button>
+      <button
+        onClick={() => {
+          navigate('./register');
+        }}
+      >
+        SignIn
+      </button>
     </div>
   );
 };
