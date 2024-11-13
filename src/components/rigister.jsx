@@ -6,11 +6,17 @@ import {
   faTimes,
   faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
-
+import {
+  clearState,
+  rigisterAction,
+  userSelector,
+} from '../Redux/slices/userSlice';
 import './login.css';
-
 import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
+import { quantum } from 'ldrs';
+quantum.register();
 
 const PWD_regex = /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/;
 const Email_regex = /\S+@\S+\.\S+/;
@@ -19,6 +25,9 @@ const Rigister = () => {
   const emailRef = useRef();
   const errRef = useRef();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isFetching, isSuccess, isError, errorMessage } =
+    useSelector(userSelector);
 
   const [email, setEmail] = useState('');
   const [validEmail, setValidEmail] = useState(false);
@@ -60,27 +69,37 @@ const Rigister = () => {
       setErrMsg('Invalid Entry');
       return;
     }
-    try {
-      const response = await axios.post(
-        'http://localhost:8008/rigister',
-        JSON.stringify({ email, pwd }),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-    } catch (error) {
-      setErrMsg('not able to Rigister at this Time Please try again later');
-    }
+    dispatch(rigisterAction({ email, pwd }));
   };
+  useEffect(() => {
+    return () => {
+      dispatch(clearState());
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Successfully created!');
+      dispatch(clearState());
+      navigate('/');
+    }
+
+    if (isError) {
+      toast.error(errorMessage);
+      dispatch(clearState());
+    }
+  }, [isSuccess, isError]);
 
   return (
     <div className="RegisterForm">
-      <h1 className="icon">
-        R<FontAwesomeIcon icon={faCloud} />
-        gister
-      </h1>
+      {isFetching ? (
+        <l-quantum size="45" speed="1.75" color="black"></l-quantum>
+      ) : (
+        <h1 className="icon">
+          R<FontAwesomeIcon icon={faCloud} />
+          gister
+        </h1>
+      )}
       <p
         ref={errRef}
         className={errMsg ? 'errMsg' : 'offscreen'}
