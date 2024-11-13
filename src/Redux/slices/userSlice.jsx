@@ -36,7 +36,13 @@ export const loginUserAction = createAsyncThunk(
           },
         }
       );
-      console.log(response);
+      const { data } = response;
+      if (response.status === 200) {
+        localStorage.setItem('token', data.user);
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
     } catch (error) {
       throw new Error('Your Credential are wrong Please check');
     }

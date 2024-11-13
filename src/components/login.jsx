@@ -36,16 +36,20 @@ const Login = () => {
 
     if (isSuccess) {
       dispatch(clearState());
-      navigate('/home');
+      navigate('/dashBoard');
     }
   }, [isError, isSuccess]);
 
   return (
     <div className="loginForm">
-      <h1 className="icon">
-        L<FontAwesomeIcon icon={faCloud} />
-        gin
-      </h1>
+      {isFetching ? (
+        <l-quantum size="45" speed="1.75" color="black"></l-quantum>
+      ) : (
+        <h1 className="icon">
+          L<FontAwesomeIcon icon={faCloud} />
+          gin
+        </h1>
+      )}
 
       <input
         type="email"
