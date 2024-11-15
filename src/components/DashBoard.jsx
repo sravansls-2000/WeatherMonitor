@@ -3,20 +3,14 @@ import {
   LaptopOutlined,
   NotificationOutlined,
   UserOutlined,
+  SearchOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import Form from './form';
+
+import { Breadcrumb, Layout, Menu, theme, Button } from 'antd';
 const { Header, Content, Sider } = Layout;
 
-const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
-  (icon, index) => {
-    const key = String(index + 1);
-    return {
-      key: `sub${key}`,
-      icon: React.createElement(icon),
-      label: `subnav ${key}`,
-    };
-  }
-);
 const Dashboard = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -29,20 +23,20 @@ const Dashboard = () => {
     >
       <Header
         style={{
-          display: 'flex',
-          alignItems: 'center',
+          padding: 0,
+
+          background: colorBgContainer,
         }}
       >
-        <div className="demo-logo" />
         <Menu
           theme="dark"
           mode="horizontal"
           style={{
-            flex: 1,
             minWidth: 0,
           }}
         >
           <div>CrikBuddies</div>
+          <Form />
         </Menu>
       </Header>
       <Layout>
@@ -54,14 +48,19 @@ const Dashboard = () => {
         >
           <Menu
             mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
+            theme="dark"
             style={{
               height: '100%',
               borderRight: 0,
             }}
-            items={items2}
-          />
+            // items={items2}
+          >
+            <button>Live Match</button>
+            <button>Matches</button>
+            <button>
+              <LogoutOutlined />
+            </button>
+          </Menu>
         </Sider>
         <Layout
           style={{
@@ -71,7 +70,7 @@ const Dashboard = () => {
           <Content
             style={{
               padding: 24,
-              margin: 2,
+              margin: 0,
               minHeight: 280,
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
