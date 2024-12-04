@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  LaptopOutlined,
-  NotificationOutlined,
-  UserOutlined,
-  SearchOutlined,
-  LogoutOutlined,
-} from '@ant-design/icons';
+import { LogoutOutlined } from '@ant-design/icons';
 import Form from './form';
 
-import { Breadcrumb, Layout, Menu, theme, Button } from 'antd';
+import { Layout, Menu, theme } from 'antd';
 const { Header, Content, Sider } = Layout;
 
 const Dashboard = () => {

@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 
 export const rigisterAction = createAsyncThunk(

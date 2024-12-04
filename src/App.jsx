@@ -15,10 +15,24 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Rigister />}></Route>
-        <Route element={<PrivateRoute />}>
-          <Route path="/home" element={<Home />} />
-          <Route path="/dashBoard" element={<DashBoard />} />
-        </Route>
+        {/* <Route element={<PrivateRoute />}> */}
+        <Route
+          path="/home"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashBoard"
+          element={
+            <PrivateRoute>
+              <DashBoard />
+            </PrivateRoute>
+          }
+        />
+        {/* </Route> */}
       </Routes>
     </BrowserRouter>
   );
